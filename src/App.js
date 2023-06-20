@@ -1,6 +1,6 @@
 import './App.css';
 import ResponsiveHeader from './Header';
-import Pagination from './Pagination';
+import { FakeDataProvider, Pagination } from './Pagination'; // Menyertakan FakeDataProvider dan Pagination dari file Pagination.js
 import RegistrationForm from './Registrasion';
 
 function App() {
@@ -8,9 +8,12 @@ function App() {
     <div className="App">
       <ResponsiveHeader/>
       <RegistrationForm/>
-      <Pagination/>
+      <FakeDataProvider>
+        <Pagination/>
+      </FakeDataProvider>
     </div>
   );
 }
 
 export default App;
+

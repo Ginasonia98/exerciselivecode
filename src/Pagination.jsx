@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 import { generateFakeData } from './fakeData';
 
-function Pagination() {
+const FakeDataContext = createContext();
+
+function FakeDataProvider({ children }) {
   const [data] = useState(generateFakeData());
   const itemsPerPage = 10;
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -54,6 +56,39 @@ function Pagination() {
   const handleInputChange = (e) => {
     setSearchQuery(e.target.value);
   };
+
+  const value = {
+    data,
+    currentPage,
+    searchQuery,
+    searchResults,
+    handlePrevPage,
+    handleNextPage,
+    handleSearch,
+    handleClearSearch,
+    renderData,
+    handleInputChange,
+  };
+
+  return <FakeDataContext.Provider value={value}>{children}</FakeDataContext.Provider>;
+}
+
+function Pagination() {
+  const {
+    data,
+    currentPage,
+    searchQuery,
+    searchResults,
+    handlePrevPage,
+    handleNextPage,
+    handleSearch,
+    handleClearSearch,
+    renderData,
+    handleInputChange,
+  } = useContext(FakeDataContext);
+
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(data.length / itemsPerPage);
 
   return (
     <div className="flex justify-center items-center flex-col">
@@ -119,7 +154,8 @@ function Pagination() {
   );
 }
 
-export default Pagination;
+export { FakeDataProvider, Pagination };
+
 
 
 
